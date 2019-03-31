@@ -48,6 +48,6 @@ while t == 0:
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONUP:
-                import project1
-                execfile(project1)
+                import menuscreen
+                exec(open(menuscreen).read())
                 os.system('python file.py')
