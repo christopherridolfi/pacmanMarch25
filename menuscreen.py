@@ -31,15 +31,16 @@ while t == 0:
             self.rect = self.image.get_rect()
             self.rect.x = x
             self.rect.y = y
+    """This is a class specificaly made for menu so I can make buttons that can be used to start the game."""
 
     go = Menu(250,200,"button13.png")
     allspriteslist = pygame.sprite.Group()
     allspriteslist.add(go)
 
     screen.fill(BLACK)
-    screen.blit(menu, (0, 0))
+    screen.blit(menu, (0, 0))#draws the menu jpg at 0,0 pixels.
     allspriteslist.draw(screen)
-    pygame.display.flip()
+    pygame.display.flip()#updates the screen.
 
     done = False
     move = (0, 0)
@@ -47,12 +48,13 @@ while t == 0:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONUP:
+            if event.type == pygame.MOUSEBUTTONUP:#This opens and reads the project1 pythong file if you press the mouse.
                 import project1
                 execfile(project1)
                 os.system('python file.py')
 
-
+"""I made this so I can have a cool intro sequence before starting my game. This leads perfectly into my pacman game
+and looks great."""
 
 
 
