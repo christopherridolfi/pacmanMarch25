@@ -16,7 +16,7 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)#defining colour values.
 BLUES = [(0,35,165),(0,35,168),(0,35,168),(0,31,150), (0,32,154),(0,25,120),(0,29,141),(0,33,158),(0,31,150),(0,34,162),(0,21,102),(0,36,173),(0,20,96)]
 x = 0
-WIDTH = 750#This is the Width of the window. This variable will be used later.
+WIDTH = 770#This is the Width of the window. This variable will be used later.
 MIN = 10
 class Pacman(pygame.sprite.Sprite):#This is my first Class. IT is made for my pacman sprite.
     def __init__(self,x,y,pac):#inititates the class.
@@ -25,7 +25,7 @@ class Pacman(pygame.sprite.Sprite):#This is my first Class. IT is made for my pa
 
         # Set height, width
         self.image = pygame.image.load(pac)#loads the image of my sprite.
-        self.image = pygame.transform.scale(self.image,(25,25))#transforms the size of the image.
+        self.image = pygame.transform.scale(self.image,(24,24))#transforms the size of the image.
         # Make our top-left corner the passed-in location.
         self.rect = self.image.get_rect()#allows me to manipulate my sprite.
         self.rect.x = x#x values.
@@ -148,7 +148,7 @@ while not done:
 
 
     if curDirection == "R":
-        if not checkForBlue(10, 0, play.rect.x+25, play.rect.y+12):
+        if not checkForBlue(10, 0, play.rect.x+24, play.rect.y+11):
             if footcounter == 0:
                 if flipstop >= 1:
                     play.image = pygame.transform.flip(play.image, True, False)
@@ -156,7 +156,7 @@ while not done:
                     flipstop +=1
             move = (10, 0)
     if curDirection == "L":
-        if not checkForBlue(-10, 0, play.rect.x, play.rect.y + 12):
+        if not checkForBlue(-10, 0, play.rect.x, play.rect.y + 11):
             move = (-10, 0)
             if footcounter == 0:
                 play.image = pygame.transform.flip(play.image, True,False)  # make it run through once without flip.
@@ -164,10 +164,10 @@ while not done:
                 flipstop+=1
 
     elif curDirection == "U":
-        if not checkForBlue(0, -10, play.rect.x+12, play.rect.y):
+        if not checkForBlue(0, -10, play.rect.x+11, play.rect.y):
             move = (0, -10)
     elif curDirection == "D":
-        if not checkForBlue(0, 10, play.rect.x+12, play.rect.y+25):
+        if not checkForBlue(0, 10, play.rect.x+11, play.rect.y+24):
             move = (0, 10)
 
     if pygame.sprite.collide_rect(ghostsp,play) and food == 1:
