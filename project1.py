@@ -137,17 +137,13 @@ while not done:
             if event.key == pygame.K_DOWN:
                 curDirection = "D"
             if event.key == pygame.K_w:#press w to move the ghost.
-                curDirection = "I"
                 move2 = (0, -10)
             if event.key == pygame.K_s:
                 move2 = (0, 10)
-                curDirection = "M"
             if event.key == pygame.K_a:
                 move2 = (-10, 0)
-                curDirection = "J"
             if event.key == pygame.K_d:
                 move2 = (10, 0)
-                curDirection = "K"
 
 
     if curDirection == "R":
@@ -232,11 +228,22 @@ while not done:
     """This is repeated code of when the pacman sprite collides with the food sprite. I am making three food and pacman
     collitions becasue I want there to be an even chance of winning."""
 
-    if play.rect.x >= WIDTH:#if pacman sprite is going of screen it teleports you to the other side.
+    if play.rect.x >= WIDTH:#if pacman sprite is going of screen it teleports you to the other side. I did this to be like original game.
         play.rect.x = 20#it brings the sprite to these x coordinates.
     if play.rect.x <= MIN:#Same as above but a
         play.rect.x = 750#it brings the sprite to these x coordinates.
 
+
+    if ghostsp.rect.x >= WIDTH:#if pacman sprite is going of screen it teleports you to the other side.
+        ghostsp.rect.x = 20#it brings the sprite to these x coordinates.
+    if ghostsp.rect.x <= MIN:#Same as above but a
+        ghostsp.rect.x = 750#it brings the sprite to these x coordinates.
+
+    elif ghostsp.rect.y == 0:
+        ghostsp.rect.y = 550
+
+    elif ghostsp.rect.y == 570:
+        ghostsp.rect.y =- 0
 
     screen.fill(BLACK)#This fills the screen with the colour black.
     screen.blit(bg, (0, 0))#This fills the screen with my backround photo at 0,0 coordinates.
