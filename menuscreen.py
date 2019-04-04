@@ -50,12 +50,10 @@ while t == 0:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONUP:#This opens and reads the project1 pythong file if you press the mouse.
                 import project1
-                execfile(project1)
+                exec(open("project1.py").read()) #This bring you to the project1 pythong file
                 os.system('python file.py')
 
 
-"""I made this so I can have a cool intro sequence before starting my game. This leads perfectly into my pacman game
-and looks great."""
 
 
 

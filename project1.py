@@ -14,10 +14,11 @@ screen = pygame.display.set_mode([800, 600])#makes my screen a 800,600 pixels.
 pygame.display.set_caption('Pacman')#makes the window name Pacman
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)#defining colour values.
-BLUES = [(0,35,165),(0,35,168),(0,35,168),(0,31,150), (0,32,154),(0,25,120),(0,29,141),(0,33,158),(0,31,150),(0,34,162),(0,21,102),(0,36,173),(0,20,96)]
+BLUES = [(0,35,165),(0,35,168),(0,35,168),(0,31,150),(0,19,91),(0,32,154),(0,25,120),(0,29,141),(0,33,158),(0,31,150),(0,34,162),(0,21,102),(0,36,173),(0,20,96)]
+#The BLUES variable contains multiple color values that are used to make sure the pacman sprite doesn't go through the colour.
 x = 0
-WIDTH = 770#This is the Width of the window. This variable will be used later.
-MIN = 10
+WIDTH = 770#This is the x value that I use for the screen loop effect when going right to left.
+MIN = 10#this is the x value that I use for the screen loop effect when going left to right.
 class Pacman(pygame.sprite.Sprite):#This is my first Class. IT is made for my pacman sprite.
     def __init__(self,x,y,pac):#inititates the class.
         #calls x,y
@@ -67,6 +68,8 @@ pacfood1 = Food(500,20,"cheeseburger.png")#creating my first food sprite using F
 pacfood2 = Food(450,384,"cheeseburger.png")#creating my second food sprite using Food class.
 pacfood3 = Food(177,500,"cheeseburger.png")
 allspriteslist.add(pacfood1)#adding my food sprite to allsprite list.
+allspriteslist.add(pacfood2)#adding my second food sprite to allsprites list.
+allspriteslist.add(pacfood3)#repeated code but for a different variable.
 
 play = Pacman(100, 94,"Packman.png")#making my pacman sprite using pacman class.
 allspriteslist.add(play)#adding my pacman sprite to allsprites list.
@@ -75,7 +78,7 @@ ghostsp = Ghost(400,260,"Ghost.png")
 allspriteslist.add(ghostsp)#repeated code.
 
 
-player_rot_speed = 250
+player_rot_speed = 250#player speed.
 
 
 
@@ -148,23 +151,23 @@ while not done:
 
 
     if curDirection == "R":
-        if not checkForBlue(10, 0, play.rect.x+24, play.rect.y+11):
+        if not checkForBlue(10, 0, play.rect.x+25, play.rect.y+12):
             if footcounter == 0:
                 if flipstop >= 1:
-                    play.image = pygame.transform.flip(play.image, True, False)
-                    footcounter += 1
-                    flipstop +=1
+                    play.image = pygame.transform.flip(play.image, True, False)#flips the play sprite horizontaly.
+                    footcounter += 1#adds 1 to footcounter variable so it doesn't flip continously.
+                    flipstop +=1#adds 1 to flipstop variable to the sprite doesn flip right when you start moving.
             move = (10, 0)
     if curDirection == "L":
-        if not checkForBlue(-10, 0, play.rect.x, play.rect.y + 11):
+        if not checkForBlue(-10, 0, play.rect.x, play.rect.y + 12):
             move = (-10, 0)
             if footcounter == 0:
                 play.image = pygame.transform.flip(play.image, True,False)  # make it run through once without flip.
-                footcounter += 1
-                flipstop+=1
+                footcounter += 1#Adds 1 to footcounter variable.
+                flipstop+=1#Adds 1 to flipstop variable
 
     elif curDirection == "U":
-        if not checkForBlue(0, -10, play.rect.x+11, play.rect.y):
+        if not checkForBlue(0, -10, play.rect.x+12, play.rect.y):
             move = (0, -10)
     elif curDirection == "D":
         if not checkForBlue(0, 10, play.rect.x+11, play.rect.y+24):
@@ -172,12 +175,15 @@ while not done:
 
     if pygame.sprite.collide_rect(ghostsp,play) and food == 1:
         import youlosep2#imports youlosep2 python file.
-        execfile(youlosep2)#opens and reads the youlosep2 python file.
+        exec(open("youlosep2.py").read())#opens and reads the youlosep2 python file.
+        os.system("python file.py")
     if pygame.sprite.collide_rect(ghostsp,play) and food !=1:#this peice of code is activated if the ghost sprite and pacman sprtie collide.
-        import youlost
-        execfile(youlost)
-        os.system('youlost.py')
+        import youlost#imports youlost python file.
+        exec(open("youlost.py").read())#opens and reads the youlost python file.
+        os.system('python file.py')#brings you to the file.
 
+    """This peice of code brings you to the "lost" python file so it can run through its own code. I did this to keep
+           the documents orginized."""
 
     if pygame.sprite.collide_rect(pacfood1,play) and food != 1:
         food = 1
@@ -185,33 +191,30 @@ while not done:
         pygame.mixer.music.set_volume(0.5)
         pygame.mixer.music.play(0)
         pygame.sprite.Sprite.kill(pacfood1)
+        allspriteslist.remove(pacfood1)
         wait = 1
         if wait == 1:
             pygame.mixer.music.load("music.mp3")
             pygame.mixer.music.play(-1)
+
     """This peice of code plays a sound effect when the play sprite and food sprite collide. This also
         makes the food variable 1 which is used so you can kill the ghost. This music plays through once and then
         replays the pacman song."""
 
-    if pygame.sprite.collide_rect(ghostsp,play) and food !=1:
-        import youlost
-        execfile(youlost)
-        os.system('youlost.py')
-        """This peice of code brings you to the lost python file so it can run through its own code. I did this to keep
-        the documents orginized."""
 
     if pygame.sprite.collide_rect(pacfood2,play) and food != 1:#activates when pacfood2 touches play sprite.
         food = 1
-        pygame.mixer.music.load("Home 14 (online-audio-converter.com).mp3")
-        pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(0)
+        pygame.mixer.music.load("Home 14 (online-audio-converter.com).mp3")#This loads the sound effect.
+        pygame.mixer.music.set_volume(0.5)#sets the volumee
+        pygame.mixer.music.play(0)#Plays through the mp3 once.
         wait = 1
-        if wait == 1:
-            pygame.mixer.music.load("music.mp3")
-            pygame.mixer.music.play(-1)
+        allspriteslist.remove(pacfood2)
+        if wait == 1:#I made this so the theme song does not cut of the mp3. As it was doing this during my testing.
+            pygame.mixer.music.load("music.mp3")#redloads the music.mp3
+            pygame.mixer.music.play(-1)#plays it in an infinite loop.
 
 
-    if pygame.sprite.collide_rect(pacfood3,play) and food != 1:
+    if pygame.sprite.collide_rect(pacfood3,play) and food != 1:#repeated code
         food = 1
         pygame.mixer.music.load("Home 14 (online-audio-converter.com).mp3")
         pygame.mixer.music.set_volume(0.5)
@@ -222,26 +225,22 @@ while not done:
             pygame.mixer.music.load("music.mp3")
             pygame.mixer.music.play(-1)
 
-    play.rect = play.rect.move(move)
-    ghostsp.rect = ghostsp.rect.move(move2)
-    time.sleep(0.09)
+    play.rect = play.rect.move(move)#moves the play sprite.
+    ghostsp.rect = ghostsp.rect.move(move2)#moves the ghost sprite.
+    time.sleep(0.09)#creates the cool stagger effect that pacman is known for.
 
     """This is repeated code of when the pacman sprite collides with the food sprite. I am making three food and pacman
     collitions becasue I want there to be an even chance of winning."""
 
     if play.rect.x >= WIDTH:#if pacman sprite is going of screen it teleports you to the other side.
-        play.rect.x = 20
+        play.rect.x = 20#it brings the sprite to these x coordinates.
     if play.rect.x <= MIN:#Same as above but a
-        play.rect.x = 750
+        play.rect.x = 750#it brings the sprite to these x coordinates.
 
 
     screen.fill(BLACK)#This fills the screen with the colour black.
     screen.blit(bg, (0, 0))#This fills the screen with my backround photo at 0,0 coordinates.
     screen.blit(ghostsp.image, ghostsp.rect)#This makes the ghost sprite appear on screen..
-    screen.blit(pacfood1.image, pacfood1.rect)#This draws the pacman food
-    screen.blit(pacfood2.image, pacfood2.rect)#repeated code.
-    screen.blit(pacfood2.image, pacfood2.rect)
-    screen.blit(pacfood3.image,pacfood3.rect)
     screen.blit(play.image, play.rect)
-    allspriteslist.draw(screen)#This draws all the sprites.
+    allspriteslist.draw(screen)#This draws all the sprites in the allsprites list on the screen.
     pygame.display.flip()#updates the screen.
